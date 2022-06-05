@@ -1,0 +1,32 @@
+{
+  "name": "blockchain",
+  "version": "0.0.0",
+  "private": true,
+  "scripts": {
+    "build": "vue-tsc --noEmit && vite build",
+    "dev": "vite",
+    "preview": "vite preview"
+  },
+  "dependencies": {
+    "@quasar/extras": "^1.14.0",
+    "axios": "^0.27.2",
+    "crypto-js": "^4.1.1",
+    "hex2ascii": "^0.0.3",
+    "js-sha256": "^0.9.0",
+    "quasar": "^2.7.1",
+    "vue": "^3.2.25",
+    "vue-cryptojs": "^2.2.1",
+    "vue-router": "^4.0.15"
+  },
+  "devDependencies": {
+    "@quasar/vite-plugin": "^1.0.10",
+    "@types/crypto-js": "^4.1.1",
+    "@vitejs/plugin-vue": "^2.3.3",
+    "sass": "1.32.12",
+    "sass-loader": "^12.0.0",
+    "typescript": "^4.5.4",
+    "vite": "^2.9.9",
+    "vue-cli-plugin-quasar": "~5.0.1",
+    "vue-tsc": "^0.34.7"
+  }
+}
