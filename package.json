@@ -16,7 +16,9 @@
     "quasar": "^2.7.1",
     "vue": "^3.2.25",
     "vue-cryptojs": "^2.2.1",
-    "vue-router": "^4.0.15"
+    "vue-paycard": "^0.7.0",
+    "vue-paycard-vite": "^0.7.0",
+    "vue-router": "^4.0.16"
   },
   "devDependencies": {
     "@quasar/vite-plugin": "^1.0.10",

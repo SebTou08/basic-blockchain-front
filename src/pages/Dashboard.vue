@@ -1,94 +1,75 @@
 <template>
-  <Suspense>
-    <template #default>
-      <div class="cardContainer" v-for="(block, index) in blockchain._chain" :key="index">
-        <q-badge></q-badge>
-        <div class="info-cnt">
-          <div
-            class="text-h6"
-            style="color: #049dd9; text-align: start; margin-left: 10px"
-          >
-           {{block._time}}
+  <div>
+    <div
+      class="cardContainer"
+      v-for="(block, index) in blockchain._chain"
+      :key="index"
+    >
+      <q-badge></q-badge>
+      <div class="info-cnt">
+        <div
+          class="text-h6"
+          style="color: #049dd9; text-align: start; margin-left: 10px"
+        >
+          {{ block._height }}
 
-            <br />
-            <q-markup-table
-              flat
-              separator="none"
-              style="max-width: 400px; margin-left: 25px"
-            >
-              <tbody>
+          <br />
+          <q-markup-table
+            flat
+            separator="none"
+            style="max-width: 800px; margin-left: 25px"
+          >
+            <tbody>
               <tr>
-                <td>Hash</td>
+                <td>From</td>
+                <td>{{ block._body.from ?? "IS GENESIS BLOCK" }}</td>
+              </tr>
+              <tr>
+                <td>To</td>
+                <td>{{ block._body.to ?? "IS GENESIS BLOCK" }}</td>
+              </tr>
+              <tr>
+                <td>Amount</td>
+                <td>{{ block._body.amount ?? "IS GENESIS BLOCK" }}</td>
+              </tr>
+              <tr>
+                <td>HASH</td>
                 <td>{{ block._hash }}</td>
               </tr>
               <tr>
-                <td>Prev. hash</td>
-                <td>{{ block._previousBlockHash }}</td>
+                <td>PREV HASH</td>
+                <td>{{ block._previousBlockHash ?? "IS GENESIS BLOCK" }}</td>
               </tr>
-              <tr>
-                <td>Height</td>
-                <td>{{ block._height }}</td>
-              </tr>
-              <tr>
-                <td>Body</td>
-                <td>{{ block._body }}</td>
-              </tr>
-              </tbody>
-            </q-markup-table>
-          </div>
-        </div>
-        <div class="actio">
-          <q-card-actions
-            align="between"
-            vertical
-            class="actions-cnt"
-            style="height: 200px"
-          >
-            <div>
-              <q-btn flat round @click="removeCollaborator">
-                <q-icon name="close" style="color: #605f5f; font-size: 1.4em"
-                /></q-btn>
-            </div>
-            <div>
-              <q-btn flat round @click="editCollaborator">
-                <q-icon
-                  name="mdi-pencil-outline"
-                  style="color: #049dd9; font-size: 1.4em"
-                /></q-btn>
-            </div>
-          </q-card-actions>
+            </tbody>
+          </q-markup-table>
         </div>
       </div>
-    </template>
-
-    <template #fallback>
-      <h4>cargando</h4>
-    </template>
-  </Suspense>
-
+    </div>
+  </div>
 </template>
 
 <script setup lang="ts">
-import {IBlockchain} from "./dashboard/models/Block";
+import { IBlockchain } from "./dashboard/models/Block";
 import axios from "axios";
 
-
-const response = await axios.get('http://localhost:3000/blockchain');
+const response = await axios.get("http://localhost:3000/blockchain");
 const blockchain: IBlockchain = response.data;
-console.log("-> blockchain", blockchain);
-
+blockchain._chain.filter((e) => e._body.from != null && e._body.to != null);
 </script>
 
 <style scoped>
 .cardContainer {
   display: flex !important;
-  box-shadow: 0 5px 10px rgba(154, 160, 185, 0.05),
-  0 15px 40px rgba(166, 173, 201, 0.2);
+  box-shadow: 0px 5px 10px 0px rgba(0, 255, 255, 0.7);
   padding: 40px;
   background: #fff;
   border-radius: 20px;
   max-width: 70vw;
   margin: 10px auto;
+}
+.cardContainer:hover {
+  transform: translateY(-5px);
+  box-shadow: 0px 10px 20px 2px rgba(0, 255, 255, 0.7);
 }
 .info-cnt {
   flex-grow: 10 !important;
