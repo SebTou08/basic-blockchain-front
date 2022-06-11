@@ -1,5 +1,7 @@
 import axios from "axios";
+import router from "../../plugins/router/index";
 import { reactive } from "vue";
+import { Notify } from "quasar";
 
 export interface INewBlock {
   from: string;
@@ -20,7 +22,13 @@ export class newBlock {
         p_block,
       },
     });
-    console.log(response);
+    if (response.status.toString().startsWith("2")) {
+      Notify.create({
+        type: "positive",
+        message: "Creado correctamente",
+      });
+      router.push("/dashboard");
+    }
   }
 }
 
