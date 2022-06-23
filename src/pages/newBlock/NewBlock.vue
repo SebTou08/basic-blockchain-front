@@ -2,7 +2,7 @@
   <div class="q-pa-md" style="max-width: 400px">
     <q-form @submit="onSubmit" class="q-gutter-md">
       <h6>Create New Block</h6>
-      <div class="cardContainer">
+      <div class="cardContainer boxx">
         <q-input
           rounded
           standout
@@ -72,7 +72,7 @@ const onSubmit = () => {
 <style scoped>
 .cardContainer {
   display: flexbox !important;
-  box-shadow: 0px 5px 10px 0px rgba(0, 255, 255, 0.7);
+  box-shadow: 0px 5px 10px 0px rgba(0, 68, 255, 0.7);
   padding: 40px;
   background: #fff;
   border-radius: 20px;
@@ -82,8 +82,9 @@ const onSubmit = () => {
   margin: 10px auto;
   margin-left: 100%;
 }
+
 .cardContainer:hover {
   transform: translateY(-5px);
-  box-shadow: 0px 10px 20px 2px rgba(0, 255, 255, 0.7);
+  box-shadow: 0px 10px 20px 2px rgb(0, 24, 134);
 }
 </style>

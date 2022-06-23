@@ -12,21 +12,6 @@ watch(tab, (val) => {
 });
 </script>
 <template>
-  <div class="toolbar">
-    <q-toolbar class="text-white shadow-2 rounded-borders toolbarcolor">
-      <q-btn flat label="Mi blockchainero" />
-      <q-space />
-      <q-tabs v-model="tab" shrink>
-        <router-link :to="{ name: 'dashboard' }">
-          <q-tab name="dashboard" label="Blockchain" />
-        </router-link>
-        <router-link :to="{ name: 'newblock' }">
-          <q-tab name="newblock" label="New Block" />
-        </router-link>
-      </q-tabs>
-    </q-toolbar>
-    <br />
-  </div>
   <router-view v-slot="{ Component }">
     <Suspense>
       <template #default>
@@ -48,24 +33,28 @@ watch(tab, (val) => {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
-  color: #2c3e50;
+  color: #1d1f21;
   margin-top: 60px;
 }
 
 :root {
   --animate-duration: 4s;
   --animate-delay: 10.9s;
-  background: #16222a; /* fallback for old browsers */
-  background: -webkit-linear-gradient(
-    to right,
-    #3a6073,
-    #16222a
-  ); /* Chrome 10-25, Safari 5.1-6 */
-  background: linear-gradient(
-    to right,
-    #3a6073,
-    #16222a
-  ); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+  background-image: radial-gradient(
+    circle,
+    #d16ba5,
+    #c777b9,
+    #ba83ca,
+    #aa8fd8,
+    #9a9ae1,
+    #8aa7ec,
+    #79b3f4,
+    #69bff8,
+    #52cffe,
+    #41dfff,
+    #46eefa,
+    #5ffbf1
+  );
 }
 .toolbar {
   position: fixed;

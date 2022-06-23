@@ -17,11 +17,10 @@ export class newBlock {
   constructor() {}
 
   async createNewBlock(p_block: INewBlock) {
-    const response = await axios.post("http://localhost:3000/newblock", {
-      data: {
-        p_block,
-      },
-    });
+    const response = await axios.post(
+      "http://localhost:3000/newblock",
+      p_block
+    );
     if (response.status.toString().startsWith("2")) {
       Notify.create({
         type: "positive",

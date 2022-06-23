@@ -1,60 +1,74 @@
 <template>
-  <div>
-    <div
-      class="cardContainer"
-      v-for="(block, index) in blockchain._chain"
-      :key="index"
-    >
-      <q-badge></q-badge>
-      <div class="info-cnt">
+  <Suspense>
+    <template #default>
+      <div class="wholecontainer">
+        <br />
+        <br />
+        <q-btn
+          style="background: #ff0080; color: white"
+          label="New Transaction"
+          @click="newTransaction"
+        />
+        <br />
+        <br />
         <div
-          class="text-h6"
-          style="color: #049dd9; text-align: start; margin-left: 10px"
+          class="cardContainer boxe"
+          v-for="(block, index) in blockchain._chain"
+          :key="index"
         >
-          {{ block._height }}
-
+          <DashbordChild
+            :transaction-data="block._body"
+            :height="block._height"
+            :block="block"
+          />
           <br />
-          <q-markup-table
-            flat
-            separator="none"
-            style="max-width: 800px; margin-left: 25px"
-          >
-            <tbody>
-              <tr>
-                <td>From</td>
-                <td>{{ block._body.from ?? "IS GENESIS BLOCK" }}</td>
-              </tr>
-              <tr>
-                <td>To</td>
-                <td>{{ block._body.to ?? "IS GENESIS BLOCK" }}</td>
-              </tr>
-              <tr>
-                <td>Amount</td>
-                <td>{{ block._body.amount ?? "IS GENESIS BLOCK" }}</td>
-              </tr>
-              <tr>
-                <td>HASH</td>
-                <td>{{ block._hash }}</td>
-              </tr>
-              <tr>
-                <td>PREV HASH</td>
-                <td>{{ block._previousBlockHash ?? "IS GENESIS BLOCK" }}</td>
-              </tr>
-            </tbody>
-          </q-markup-table>
         </div>
       </div>
-    </div>
-  </div>
+    </template>
+    <template #fallback>
+      <h3>Loading</h3>
+    </template>
+  </Suspense>
 </template>
 
 <script setup lang="ts">
 import { IBlockchain } from "./dashboard/models/Block";
 import axios from "axios";
+import dashboardController from "./newBlock/dashboard";
+import DashbordChild from "./dashboard/dashbordChild.vue";
+import router from "../plugins/router/index";
 
-const response = await axios.get("http://localhost:3000/blockchain");
-const blockchain: IBlockchain = response.data;
-blockchain._chain.filter((e) => e._body.from != null && e._body.to != null);
+await dashboardController.loadInfo();
+
+//const response = await axios.get("http://localhost:3000/blockchain");
+const blockchain: IBlockchain = dashboardController.$blockchain;
+
+console.log("%c⧭", "color: #aa00ff", blockchain);
+/*blockchain._chain = blockchain._chain.map((e) => {
+  return {
+    _hash: e._hash,
+    _height: e._height,
+    _previousBlockHash: e._previousBlockHash ?? "GENESIS",
+    _time: e._time,
+    _body: {
+      data: {
+        p_block: {
+          from: e._body.data.p_block.from ?? "GENESIS",
+          to: e._body.data.p_block.to ?? "genesis",
+          amount: e._body.data.p_block.amount ?? "GENESIS",
+          cardDebited: e._body.data.p_block.cardDebited ?? "genesis",
+          accountNumberTo: e._body.data.p_block.accountNumberTo ?? "asdsad",
+        },
+      },
+    },
+  };
+});*/
+
+const newTransaction = () => {
+  router.push("/newblock");
+};
+console.log("%c⧭", "color: #00a3cc", blockchain);
+//blockchain._chain.filter((e) => e._body.from != null && e._body.to != null);
 </script>
 
 <style scoped>
@@ -77,5 +91,53 @@ blockchain._chain.filter((e) => e._body.from != null && e._body.to != null);
 .actions-cnt {
   flex-grow: 1;
   justify-content: space-between;
+}
+
+.wholecontainer {
+  background-image: radial-gradient(
+    circle,
+    #d16ba5,
+    #c777b9,
+    #ba83ca,
+    #aa8fd8,
+    #9a9ae1,
+    #8aa7ec,
+    #79b3f4,
+    #69bff8,
+    #52cffe,
+    #41dfff,
+    #46eefa,
+    #5ffbf1
+  );
+  height: 100vh;
+  width: 100vw;
+  margin-top: -60px;
+}
+.boxe:before {
+  content: "";
+  z-index: -1;
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  background: linear-gradient(-207deg, #03e5b7 73%, #037ade 200%);
+  transform: translate3d(47px, 19px, 0) scale(0.95);
+  filter: blur(58px);
+  opacity: var(1);
+  transition: opacity 0.3s;
+  border-radius: inherit;
+}
+
+.boxe::after {
+  content: "";
+  z-index: -1;
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  background: inherit;
+  border-radius: inherit;
 }
 </style>
